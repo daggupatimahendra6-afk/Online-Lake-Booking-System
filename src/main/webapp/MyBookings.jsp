@@ -273,7 +273,7 @@
 <%
     // Session guard
     String loggedUser = (session != null) ? (String)session.getAttribute("username") : null;
-    if (loggedUser == null) { response.sendRedirect("Login.jsp"); return; }
+    if (loggedUser == null) { response.sendRedirect("login"); return; }
 
     String  fullName    = (String)  request.getAttribute("fullName");
     if (fullName == null || fullName.isEmpty()) fullName = loggedUser;
@@ -304,7 +304,7 @@
             <h2>👋 Welcome, <%= fullName %>!</h2>
             <p>Here are all your bookings at Vasota Lake Camping.</p>
         </div>
-        <a href="Bookings.jsp" class="btn-newbooking">📅 New Booking</a>
+        <a href="book" class="btn-newbooking">📅 New Booking</a>
     </div>
 
     <!-- Stat Cards -->
@@ -348,7 +348,7 @@
             <span class="nb-icon">🏕️</span>
             <h3>No bookings yet!</h3>
             <p>You haven't made any reservations. Start your adventure today!</p>
-            <a href="Bookings.jsp">📅 Book a Campsite</a>
+            <a href="book">📅 Book a Campsite</a>
         </div>
 
         <% } else { %>
@@ -475,7 +475,7 @@
     </div>
 
     <div class="logout-link">
-        <a href="Logout.jsp">🚪 Logout</a>
+        <a href="logout">🚪 Logout</a>
     </div>
 </div>
 

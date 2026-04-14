@@ -34,7 +34,7 @@
                             <h6>Rs.999/- per person</h6>
                             </p>
 
-                        <a href="Bookings.jsp" class="btn btn-primary">Book Now</a>
+                        <a href="book" class="btn btn-primary">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                                         Check-in Time - 3:00 PM<br>
                                         Check-out Time - 11:00 AM</p><br>
                                         <h6>Rs.3499/- per person</h6>
-                        <a href="Bookings.jsp" class="btn btn-primary">Book Now</a>
+                        <a href="book" class="btn btn-primary">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                                                 Check-in Time - 3:00 PM<br>
                                                 Check-out Time - 11:00 AM</p><br>
                                                 <h6>Rs.1499/- per person</h6>
-                        <a href="Bookings.jsp" class="btn btn-primary">Book Now</a>
+                        <a href="book" class="btn btn-primary">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                                                      Check-in Time - 3:00 PM<br>
                                                      Check-out Time - 11:00 AM</p><br>
                                                      <h6>Rs.2499/- per person</h6>
-                                <a href="Bookings.jsp" class="btn btn-primary">Book Now</a>
+                                <a href="book" class="btn btn-primary">Book Now</a>
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                                                     Check-in Time - 3:00 PM <br>
                                                     Check-out Time - 11:00 AM</p><br>
                                                     <h6>Rs.2999/- per person</h6>
-                                <a href="Bookings.jsp" class="btn btn-primary">Book Now</a>
+                                <a href="book" class="btn btn-primary">Book Now</a>
                             </div>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                                                     Check-in Time - 3:00 PM <br>
                                                     Check-out Time - 11:00 AM</p><br>
                                                     <h6>Rs.3999/- per person</h6>
-                                <a href="Bookings.jsp" class="btn btn-primary">Book Now</a>
+                                <a href="book" class="btn btn-primary">Book Now</a>
                             </div>
                         </div>
                     </div>

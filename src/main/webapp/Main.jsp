@@ -247,8 +247,8 @@
         <h1>🏕️ Vasota Lake Camping</h1>
         <p>Experience the magic of nature in the heart of the Sahyadri ranges. Trekking, bonfires, stargazing — all in one unforgettable getaway.</p>
         <div class="hero-btns">
-            <a href="./Bookings.jsp" class="btn-hero-primary">📅 Book Your Spot</a>
-            <a href="./Offers.jsp"   class="btn-hero-outline">🏷️ View Offers</a>
+            <a href="./book" class="btn-hero-primary">📅 Book Your Spot</a>
+            <a href="./offers"   class="btn-hero-outline">🏷️ View Offers</a>
         </div>
     </div>
 </div>
@@ -407,7 +407,7 @@
 <div class="cta-section">
     <h2>Ready for Your Adventure? 🏔️</h2>
     <p>Spots fill up fast — secure your camping experience today!</p>
-    <a href="./Bookings.jsp" class="btn-cta">📅 Book Now</a>
+    <a href="./book" class="btn-cta">📅 Book Now</a>
 </div>
 
 <%@ include file="Footer.jsp" %>

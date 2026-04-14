@@ -202,13 +202,13 @@
 
     <!-- Footer Buttons -->
     <div class="card-footer">
-        <a href="Main.jsp"     class="btn btn-primary">🏕️ Home</a>
+        <a href="home"     class="btn btn-primary">🏕️ Home</a>
         <% if (isLoggedIn) { %>
         <a href="./MyBookings" class="btn btn-mybookings">📋 My Bookings</a>
         <% } else { %>
-        <a href="Login.jsp"    class="btn btn-mybookings">🔐 Login to Track</a>
+        <a href="login"    class="btn btn-mybookings">🔐 Login to Track</a>
         <% } %>
-        <a href="Bookings.jsp" class="btn btn-outline">📅 New Booking</a>
+        <a href="book" class="btn btn-outline">📅 New Booking</a>
     </div>
 
 </div>

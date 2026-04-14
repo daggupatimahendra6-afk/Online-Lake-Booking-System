@@ -26,7 +26,7 @@ public class MyBookings extends HttpServlet {
         // Session guard
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("username") == null) {
-            response.sendRedirect("Login.jsp");
+            response.sendRedirect("login");
             return;
         }
 
@@ -103,7 +103,7 @@ public class MyBookings extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("username") == null) {
-            response.sendRedirect("Login.jsp");
+            response.sendRedirect("login");
             return;
         }
 

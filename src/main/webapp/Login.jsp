@@ -277,7 +277,7 @@
             </div>
 
             <div class="card-footer">
-                Don't have an account? <a href="SignUp.jsp">Register here</a>
+                Don't have an account? <a href="signup">Register here</a>
             </div>
         </div>
 

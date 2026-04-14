@@ -86,7 +86,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
 
         <!-- Brand: logo + site title -->
-        <a class="navbar-brand" href="./Main.jsp">
+        <a class="navbar-brand" href="./home">
             <img src="./images/vlogo.png" alt="Vasota Logo">
             <span class="site-name">Vasota Lake Camping</span>
         </a>
@@ -105,22 +105,22 @@
         <div class="collapse navbar-collapse" id="navbarLinks">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
                 <li class="nav-item">
-                    <a class="nav-link" href="./Main.jsp">🏠 Home</a>
+                    <a class="nav-link" href="./home">🏠 Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./Offers.jsp">🏷️ Offers</a>
+                    <a class="nav-link" href="./offers">🏷️ Offers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./Gallery.jsp">🖼️ Gallery</a>
+                    <a class="nav-link" href="./gallery">🖼️ Gallery</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./Bookings.jsp">📅 Bookings</a>
+                    <a class="nav-link" href="./book">📅 Bookings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./Contact.jsp">✉️ Contact</a>
+                    <a class="nav-link" href="./contact">✉️ Contact</a>
                 </li>
                 <li class="nav-item ms-lg-2">
-                    <a class="nav-link btn-login" href="Login.jsp">🔐 Login</a>
+                    <a class="nav-link btn-login" href="login">🔐 Login</a>
                 </li>
             </ul>
         </div>

@@ -38,7 +38,7 @@
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="Logout.jsp">Log Out</a>
+            <a class="nav-link" href="./logout">Log Out</a>
           </li>
         </ul>
        

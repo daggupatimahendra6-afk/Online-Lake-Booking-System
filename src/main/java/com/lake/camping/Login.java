@@ -42,17 +42,17 @@ public class Login extends HttpServlet {
                 if ("admin".equals(rs.getString("role"))) {
                     response.sendRedirect(request.getContextPath() + "/Dashboard");
                 } else {
-                    response.sendRedirect("MyBookings.jsp");
+                    response.sendRedirect("MyBookings");
                 }
             } else {
                 request.setAttribute("error", "Invalid username or password.");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
+                request.getRequestDispatcher("/login").forward(request, response);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "Server error. Please try again.");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
+            request.getRequestDispatcher("/login").forward(request, response);
         }
     }
 }

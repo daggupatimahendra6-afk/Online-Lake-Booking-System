@@ -332,7 +332,7 @@ body { font-family: Arial, sans-serif; background: #f0f7f3; }
 
         <p class="login-hint">
             Already have an account?
-            <a href="Login.jsp">Login to track your bookings</a>
+            <a href="login">Login to track your bookings</a>
         </p>
     </div>
   </div>

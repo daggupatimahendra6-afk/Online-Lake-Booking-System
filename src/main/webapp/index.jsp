@@ -56,8 +56,8 @@
         </p>
 
         <div class="mt-4">
-            <a href="Bookings.jsp" class="btn btn-primary me-2 px-4">Book Now</a>
-            <a href="Login.jsp" class="btn btn-outline-secondary px-4">Login</a>
+            <a href="book" class="btn btn-primary me-2 px-4">Book Now</a>
+            <a href="login" class="btn btn-outline-secondary px-4">Login</a>
         </div>
 
     </div>

@@ -5,7 +5,7 @@
     /* ── Admin session guard (belt-and-suspenders; AuthFilter is primary) ── */
     String _role = (session != null) ? (String) session.getAttribute("role") : null;
     if (!"admin".equals(_role)) {
-        response.sendRedirect(request.getContextPath() + "/Login.jsp");
+        response.sendRedirect(request.getContextPath() + "/login");
         return;
     }
 
@@ -317,11 +317,11 @@
                     <div class="qa-icon">✉️</div>
                     View Enquiries
                 </a>
-                <a href="./Offers.jsp" class="qa-btn qa-orange">
+                <a href="./offers" class="qa-btn qa-orange">
                     <div class="qa-icon">🏷️</div>
                     Manage Offers
                 </a>
-                <a href="./Logout.jsp" class="qa-btn qa-red">
+                <a href="./logout" class="qa-btn qa-red">
                     <div class="qa-icon">🚪</div>
                     Logout
                 </a>

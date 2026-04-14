@@ -42,7 +42,7 @@ public class AuthFilter implements Filter {
         } else {
             // Not authenticated as admin — redirect to login
             String contextPath = req.getContextPath();
-            resp.sendRedirect(contextPath + "/Login.jsp");
+            resp.sendRedirect(contextPath + "/login");
         }
     }
 
