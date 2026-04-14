@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+    <display-name>Onlinecamp — Vasota Lake Camping</display-name>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SECURITY: Block direct browser access to sensitive project files.
+         Eclipse project extents (.classpath, .project, .settings),
+         git files (.gitignore, .git/), and build artifacts must never be
+         served to any user via URL.
+    ══════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Block Eclipse project extents -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Eclipse Project Files</web-resource-name>
+            <url-pattern>/.classpath</url-pattern>
+            <url-pattern>/.project</url-pattern>
+            <url-pattern>/.settings/*</url-pattern>
+            <url-pattern>/.gitignore</url-pattern>
+            <url-pattern>/.git/*</url-pattern>
+            <url-pattern>/build/*</url-pattern>
+            <url-pattern>*.class</url-pattern>
+        </web-resource-collection>
+        <!-- Empty auth-constraint = deny ALL access (no role can access) -->
+        <auth-constraint/>
+    </security-constraint>
+
+    <!-- Block dot-files generally (hidden files) -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Hidden Dot Files</web-resource-name>
+            <url-pattern>/.*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint/>
+    </security-constraint>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SESSION CONFIG
+    ══════════════════════════════════════════════════════════════════════ -->
+    <session-config>
+        <!-- Session timeout: 30 minutes -->
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <!-- HttpOnly prevents JavaScript from reading the session cookie -->
+            <http-only>true</http-only>
+            <!-- Secure: send cookie only over HTTPS (enable in production) -->
+            <!-- <secure>true</secure> -->
+            <same-site>Strict</same-site>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         WELCOME FILES
+    ══════════════════════════════════════════════════════════════════════ -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>Main.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         CUSTOM ERROR PAGES
+    ══════════════════════════════════════════════════════════════════════ -->
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error403.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error500.jsp</location>
+    </error-page>
+
+</web-app>

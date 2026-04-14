@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Tomcat Context configuration for Onlinecamp.
+    Placed in META-INF/context.xml — Tomcat reads this automatically
+    when the WAR/project is deployed.
+
+    Key security setting:
+    allowLinking="false"  — prevents symlink attacks
+-->
+<Context allowLinking="false">
+
+    <!--
+        Block direct HTTP access to Eclipse project extents and
+        other sensitive files at the Tomcat valve level.
+        This fires BEFORE the servlet container, so web.xml security
+        constraints never even get a chance to process these URLs.
+    -->
+    <Valve className="org.apache.catalina.valves.rewrite.RewriteValve" />
+
+    <!--
+        Tomcat's built-in DefaultServlet has a "hidden files" check.
+        Setting "listings" to false prevents directory browsing.
+    -->
+    <Parameter name="org.apache.catalina.servlets.DefaultServlet.listings"
+               value="false" override="false" />
+
+</Context>
