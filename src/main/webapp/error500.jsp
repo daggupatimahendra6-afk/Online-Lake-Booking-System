@@ -40,7 +40,7 @@
         <h1>500 — Server Error</h1>
         <p>Something went wrong on our end.<br>
            Our team has been notified. Please try again shortly.</p>
-        <a href="<%= request.getContextPath() %>/index.jsp">← Back to Home</a>
+        <a href="<%= request.getContextPath() %>/">← Back to Home</a>
     </div>
 </body>
 </html>

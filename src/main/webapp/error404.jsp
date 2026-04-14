@@ -40,7 +40,7 @@
         <h1>404 — Page Not Found</h1>
         <p>The page you're looking for doesn't exist or has been moved.<br>
            Let us guide you back to the campsite!</p>
-        <a href="<%= request.getContextPath() %>/index.jsp">← Back to Home</a>
+        <a href="<%= request.getContextPath() %>/">← Back to Home</a>
     </div>
 </body>
 </html>

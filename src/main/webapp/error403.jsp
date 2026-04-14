@@ -40,7 +40,7 @@
         <h1>403 — Access Denied</h1>
         <p>You don't have permission to access this resource.<br>
            This area is restricted.</p>
-        <a href="<%= request.getContextPath() %>/index.jsp">← Back to Home</a>
+        <a href="<%= request.getContextPath() %>/">← Back to Home</a>
     </div>
 </body>
 </html>

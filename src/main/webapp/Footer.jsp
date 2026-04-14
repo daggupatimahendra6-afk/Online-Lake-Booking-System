@@ -12,10 +12,10 @@
 		<div class="container">
 			<div class="quick-links">
 				<h3>Quick Links</h3>
-				<a href="Offers.jsp" target="_blank">Offers</a> | <a
-					href="Gallery.jsp" target="_blank">Gallery</a> | <a
-					href="Bookings.jsp" target="_blank">Booking</a> | <a
-					href="Contact.jsp" target="_blank">Contact</a>
+				<a href="offers" target="_blank">Offers</a> | <a
+					href="gallery" target="_blank">Gallery</a> | <a
+					href="book" target="_blank">Booking</a> | <a
+					href="contact" target="_blank">Contact</a>
 			</div>
 
 			<p>&#128205; Vasota Fort, Koyna Backwaters | &#128222; +91 9579350747 | &#128231;
