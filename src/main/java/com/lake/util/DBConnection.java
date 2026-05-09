@@ -20,9 +20,9 @@ public class DBConnection {
     private static final String PWD;
 
     static {
-        URL = getEnv("DB_URL", "jdbc:postgresql://ep-fragrant-sound-aq8ch43r-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require");
-        USER = getEnv("DB_USER", "neondb_owner");
-        PWD = getEnv("DB_PWD", "npg_eo2Ckivh0jaL");
+        URL = getEnv("DB_URL", "jdbc:postgresql://localhost/onlinecamp");
+        USER = getEnv("DB_USER", "postgres");
+        PWD = getEnv("DB_PWD", "root");
 
         // Load the PostgreSQL JDBC driver (required for older Tomcat versions)
         try {
