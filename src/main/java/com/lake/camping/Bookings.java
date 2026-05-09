@@ -240,24 +240,26 @@ public class Bookings extends HttpServlet {
             return;
         }
 
-        // ── Forward to Thank-you page ───────────────────────────────────────
-        request.setAttribute("bookingId",     bookingId);
-        request.setAttribute("bookingRef",    bookingRef);
-        request.setAttribute("guestName",     name);
-        request.setAttribute("guestEmail",    email);
-        request.setAttribute("guestPhone",    phone);
-        request.setAttribute("noPersons",     noPersons);
-        request.setAttribute("noKids",        noKids);
-        request.setAttribute("arrivalDate",   arrivalStr);
-        request.setAttribute("departureDate", departureStr);
-        request.setAttribute("tentName",      tentName);
-        request.setAttribute("tentPrice",     tentPrice);
-        request.setAttribute("totalCost",     totalCost);
-        request.setAttribute("paymentMethod", paymentMethod);
-        request.setAttribute("paymentStatus", paymentStatus);
-        request.setAttribute("savedUsername", formUsername);
+        // ── Redirect to Thank-you page (PRG Pattern) ───────────────────────
+        HttpSession session = request.getSession(true);
+        session.setAttribute("bookingId",     bookingId);
+        session.setAttribute("bookingRef",    bookingRef);
+        session.setAttribute("guestName",     name);
+        session.setAttribute("guestEmail",    email);
+        session.setAttribute("guestPhone",    phone);
+        session.setAttribute("noPersons",     noPersons);
+        session.setAttribute("noKids",        noKids);
+        session.setAttribute("arrivalDate",   arrivalStr);
+        session.setAttribute("departureDate", departureStr);
+        session.setAttribute("tentName",      tentName);
+        session.setAttribute("tentPrice",     tentPrice);
+        session.setAttribute("totalCost",     totalCost);
+        session.setAttribute("paymentMethod", paymentMethod);
+        session.setAttribute("paymentStatus", paymentStatus);
+        session.setAttribute("savedUsername", formUsername);
 
-        request.getRequestDispatcher("Thankyou.jsp").forward(request, response);
+        // Safely redirect to the clean URL mapped in web.xml
+        response.sendRedirect(request.getContextPath() + "/thankyou");
     }
 
     // ── Send HTML confirmation email (Item 5) ───────────────────────────────

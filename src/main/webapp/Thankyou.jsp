@@ -128,21 +128,37 @@
 </head>
 <body>
 <%
-    int    bookingId     = request.getAttribute("bookingId")     != null ? (Integer)request.getAttribute("bookingId")     : 0;
-    String guestName     = request.getAttribute("guestName")     != null ? (String) request.getAttribute("guestName")     : "Guest";
-    String guestEmail    = request.getAttribute("guestEmail")    != null ? (String) request.getAttribute("guestEmail")    : "";
-    long   guestPhone    = request.getAttribute("guestPhone")    != null ? (Long)   request.getAttribute("guestPhone")    : 0L;
-    int    noPersons     = request.getAttribute("noPersons")     != null ? (Integer)request.getAttribute("noPersons")     : 0;
-    int    noKids        = request.getAttribute("noKids")        != null ? (Integer)request.getAttribute("noKids")        : 0;
-    String arrivalDate   = request.getAttribute("arrivalDate")   != null ? (String) request.getAttribute("arrivalDate")   : "";
-    String departureDate = request.getAttribute("departureDate") != null ? (String) request.getAttribute("departureDate") : "";
-    String tentName      = request.getAttribute("tentName")      != null ? (String) request.getAttribute("tentName")      : "";
-    int    tentPrice     = request.getAttribute("tentPrice")     != null ? (Integer)request.getAttribute("tentPrice")     : 0;
-    int    totalCost     = request.getAttribute("totalCost")     != null ? (Integer)request.getAttribute("totalCost")     : 0;
-    String payMethod     = request.getAttribute("paymentMethod") != null ? (String) request.getAttribute("paymentMethod") : "OFFLINE";
-    String payStatus     = request.getAttribute("paymentStatus") != null ? (String) request.getAttribute("paymentStatus") : "PENDING";
+    int    bookingId     = session.getAttribute("bookingId")     != null ? (Integer)session.getAttribute("bookingId")     : 0;
+    String guestName     = session.getAttribute("guestName")     != null ? (String) session.getAttribute("guestName")     : "Guest";
+    String guestEmail    = session.getAttribute("guestEmail")    != null ? (String) session.getAttribute("guestEmail")    : "";
+    long   guestPhone    = session.getAttribute("guestPhone")    != null ? (Long)   session.getAttribute("guestPhone")    : 0L;
+    int    noPersons     = session.getAttribute("noPersons")     != null ? (Integer)session.getAttribute("noPersons")     : 0;
+    int    noKids        = session.getAttribute("noKids")        != null ? (Integer)session.getAttribute("noKids")        : 0;
+    String arrivalDate   = session.getAttribute("arrivalDate")   != null ? (String) session.getAttribute("arrivalDate")   : "";
+    String departureDate = session.getAttribute("departureDate") != null ? (String) session.getAttribute("departureDate") : "";
+    String tentName      = session.getAttribute("tentName")      != null ? (String) session.getAttribute("tentName")      : "";
+    int    tentPrice     = session.getAttribute("tentPrice")     != null ? (Integer)session.getAttribute("tentPrice")     : 0;
+    int    totalCost     = session.getAttribute("totalCost")     != null ? (Integer)session.getAttribute("totalCost")     : 0;
+    String payMethod     = session.getAttribute("paymentMethod") != null ? (String) session.getAttribute("paymentMethod") : "OFFLINE";
+    String payStatus     = session.getAttribute("paymentStatus") != null ? (String) session.getAttribute("paymentStatus") : "PENDING";
     boolean isPaid       = "PAID".equals(payStatus);
     boolean isLoggedIn   = session != null && session.getAttribute("username") != null;
+
+    // Clear flash attributes
+    session.removeAttribute("bookingId");
+    session.removeAttribute("guestName");
+    session.removeAttribute("guestEmail");
+    session.removeAttribute("guestPhone");
+    session.removeAttribute("noPersons");
+    session.removeAttribute("noKids");
+    session.removeAttribute("arrivalDate");
+    session.removeAttribute("departureDate");
+    session.removeAttribute("tentName");
+    session.removeAttribute("tentPrice");
+    session.removeAttribute("totalCost");
+    session.removeAttribute("paymentMethod");
+    session.removeAttribute("paymentStatus");
+    session.removeAttribute("savedUsername");
 %>
 
 <div class="card">
