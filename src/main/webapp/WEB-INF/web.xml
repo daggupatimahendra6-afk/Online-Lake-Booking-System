@@ -2,8 +2,8 @@
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
-                             https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
-         version="6.0">
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
 
     <display-name>Onlinecamp — Vasota Lake Camping</display-name>
 
@@ -96,43 +96,136 @@
     </servlet-mapping>
 
     <!-- ══════════════════════════════════════════════════════════════════════
+         JAVA SERVLET REGISTRATIONS
+         Explicit registration overrides annotation scanning — needed for
+         some Eclipse/WTP Tomcat configurations that miss @WebServlet classes.
+    ══════════════════════════════════════════════════════════════════════ -->
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.lake.camping.Login</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DashboardServlet</servlet-name>
+        <servlet-class>com.lake.camping.Dashboard</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DashboardServlet</servlet-name>
+        <url-pattern>/Dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MyBookingsServlet</servlet-name>
+        <servlet-class>com.lake.camping.MyBookings</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyBookingsServlet</servlet-name>
+        <url-pattern>/MyBookings</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BookingsServlet</servlet-name>
+        <servlet-class>com.lake.camping.Bookings</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookingsServlet</servlet-name>
+        <url-pattern>/Bookings</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ContactServlet</servlet-name>
+        <servlet-class>com.lake.camping.Contact</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactServlet</servlet-name>
+        <url-pattern>/Contact</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DisplayBookingServlet</servlet-name>
+        <servlet-class>com.lake.camping.DisplayBooking</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DisplayBookingServlet</servlet-name>
+        <url-pattern>/DisplayBooking</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DisplayContactServlet</servlet-name>
+        <servlet-class>com.lake.camping.DisplayContact</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DisplayContactServlet</servlet-name>
+        <url-pattern>/DisplayContact</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SignUpServlet</servlet-name>
+        <servlet-class>com.lake.camping.SignUp</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignUpServlet</servlet-name>
+        <url-pattern>/SignUp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddAdminServlet</servlet-name>
+        <servlet-class>com.lake.camping.AddAdmin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddAdminServlet</servlet-name>
+        <url-pattern>/AddAdmin</url-pattern>
+    </servlet-mapping>
+
+    <!-- ── Gemini AI Proxy — keeps API key server-side ── -->
+    <servlet>
+        <servlet-name>GeminiProxy</servlet-name>
+        <servlet-class>com.lake.camping.GeminiProxy</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GeminiProxy</servlet-name>
+        <url-pattern>/GeminiProxy</url-pattern>
+    </servlet-mapping>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         AUTH FILTER — guards all admin-only URLs
+    ══════════════════════════════════════════════════════════════════════ -->
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.lake.camping.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/Dashboard</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/DisplayBooking</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/DisplayContact</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/AddAdmin</url-pattern>
+    </filter-mapping>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
          SECURITY: Block direct access to .jsp files, Eclipse project
          extents, git files, build output and all dot-files.
          Users must use clean URLs only.
     ══════════════════════════════════════════════════════════════════════ -->
 
-    <!-- Block direct .jsp access (force clean URLs) -->
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Raw JSP Files</web-resource-name>
-            <url-pattern>*.jsp</url-pattern>
-        </web-resource-collection>
-        <auth-constraint/>
-    </security-constraint>
 
-    <!-- Block Eclipse project extents and dev files -->
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Eclipse and Dev Files</web-resource-name>
-            <url-pattern>/.classpath</url-pattern>
-            <url-pattern>/.project</url-pattern>
-            <url-pattern>/.settings/*</url-pattern>
-            <url-pattern>/.gitignore</url-pattern>
-            <url-pattern>/.git/*</url-pattern>
-            <url-pattern>/build/*</url-pattern>
-            <url-pattern>*.class</url-pattern>
-        </web-resource-collection>
-        <auth-constraint/>
-    </security-constraint>
 
-    <!-- Block all hidden dot-files -->
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Hidden Dot Files</web-resource-name>
-            <url-pattern>/.*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint/>
-    </security-constraint>
+
 
     <!-- ══════════════════════════════════════════════════════════════════════
          SESSION CONFIG
@@ -141,7 +234,6 @@
         <session-timeout>30</session-timeout>
         <cookie-config>
             <http-only>true</http-only>
-            <same-site>Strict</same-site>
         </cookie-config>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>

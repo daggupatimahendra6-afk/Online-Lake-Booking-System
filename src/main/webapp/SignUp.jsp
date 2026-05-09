@@ -106,6 +106,20 @@
             transition: width 0.3s, background 0.3s;
             border-radius: 2px;
         }
+
+        /* ── Show/Hide password wrapper ── */
+        .pw-wrap { position: relative; }
+        .pw-wrap input { padding-right: 44px !important; }
+        .pw-toggle {
+            position: absolute;
+            right: 12px; top: 50%;
+            transform: translateY(-50%);
+            background: none; border: none;
+            cursor: pointer; font-size: 17px;
+            color: #aaa; line-height: 1; padding: 0;
+            transition: color 0.2s;
+        }
+        .pw-toggle:hover { color: #28a745; }
     </style>
 </head>
 <body>
@@ -158,17 +172,23 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>Password *</label>
-                    <input type="password" name="password" id="password"
-                           placeholder="Min 6 characters" required minlength="6"
-                           oninput="checkStrength(this.value)">
+                    <div class="pw-wrap">
+                        <input type="password" name="password" id="password"
+                               placeholder="Min 6 characters" required minlength="6"
+                               oninput="checkStrength(this.value)">
+                        <button type="button" class="pw-toggle" onclick="togglePw('password', this)" title="Show password">👁️</button>
+                    </div>
                     <div class="strength-bar">
                         <div class="strength-fill" id="strengthFill"></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Confirm Password *</label>
-                    <input type="password" name="confirm_password" id="confirm_password"
-                           placeholder="Re-enter password" required>
+                    <div class="pw-wrap">
+                        <input type="password" name="confirm_password" id="confirm_password"
+                               placeholder="Re-enter password" required>
+                        <button type="button" class="pw-toggle" onclick="togglePw('confirm_password', this)" title="Show password">👁️</button>
+                    </div>
                 </div>
             </div>
 
@@ -210,6 +230,14 @@
             return false;
         }
         return true;
+    }
+
+    function togglePw(inputId, btn) {
+        var inp  = document.getElementById(inputId);
+        var show = inp.type === 'password';
+        inp.type     = show ? 'text' : 'password';
+        btn.textContent = show ? '🙈' : '👁️';
+        btn.title    = show ? 'Hide password' : 'Show password';
     }
 </script>
 

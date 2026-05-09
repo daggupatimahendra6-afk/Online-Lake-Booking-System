@@ -1,261 +1,230 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ include file="Header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bookings — Vasota Lake Camping</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, sans-serif; background: #f0f7f3; }
+        body { font-family: 'Inter', Arial, sans-serif; background: #f0f7f3; }
 
-        .page { max-width: 1050px; margin: 0 auto; padding: 30px 16px 70px; }
+        .page { max-width: 1080px; margin: 0 auto; padding: 30px 16px 80px; }
 
         /* ── Welcome Banner ── */
         .welcome {
-            background: linear-gradient(135deg, #1a3a2a, #28a745);
+            background: linear-gradient(135deg, #0A2E1F 0%, #1aa356 60%, #22c76a 100%);
             color: white;
-            border-radius: 16px;
-            padding: 24px 30px;
+            border-radius: 20px;
+            padding: 28px 32px;
             margin-bottom: 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 14px;
-            box-shadow: 0 6px 20px rgba(40,167,69,0.25);
+            box-shadow: 0 8px 28px rgba(26,163,86,0.30);
+            position: relative;
+            overflow: hidden;
         }
-        .welcome h2 { font-size: 22px; }
-        .welcome p  { font-size: 13px; opacity: 0.85; margin-top: 5px; }
+        .welcome::before {
+            content: '🏕️';
+            position: absolute;
+            right: 180px; top: 50%;
+            transform: translateY(-50%);
+            font-size: 80px;
+            opacity: 0.07;
+        }
+        .welcome h2 { font-size: 24px; font-weight: 800; }
+        .welcome p  { font-size: 13px; opacity: 0.85; margin-top: 6px; }
         .btn-newbooking {
-            padding: 11px 26px;
+            padding: 12px 28px;
             background: white;
-            color: #1a3a2a;
+            color: #0A2E1F;
             border-radius: 30px;
             text-decoration: none;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 700;
             white-space: nowrap;
             transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
         }
-        .btn-newbooking:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
+        .btn-newbooking:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
 
-        /* ── Stat cards ── */
+        /* ── Stat Cards ── */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
+            gap: 16px;
             margin-bottom: 24px;
         }
         .stat-card {
             background: white;
-            border-radius: 14px;
-            padding: 18px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+            border-radius: 16px;
+            padding: 20px 22px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
             display: flex;
             align-items: center;
-            gap: 14px;
-            transition: transform 0.2s;
+            gap: 16px;
+            transition: transform 0.25s, box-shadow 0.25s;
+            border: 1px solid rgba(0,0,0,0.04);
         }
-        .stat-card:hover { transform: translateY(-2px); }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,0.10); }
         .si {
-            font-size: 24px;
-            width: 52px; height: 52px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 22px;
+            width: 54px; height: 54px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
         }
-        .si-blue   { background: #e8f0fe; }
-        .si-green  { background: #e6f9ee; }
-        .si-orange { background: #fff4e5; }
-        .stat-info label {
-            font-size: 11px; color: #999;
-            text-transform: uppercase; letter-spacing: 0.5px;
+        .si-blue   { background: linear-gradient(135deg,#dbeafe,#bfdbfe); }
+        .si-green  { background: linear-gradient(135deg,#d1fae5,#a7f3d0); }
+        .si-orange { background: linear-gradient(135deg,#fef3c7,#fde68a); }
+        .stat-info label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.7px; font-weight: 600; }
+        .stat-info .val  { font-size: 28px; font-weight: 800; color: #1a1a2e; margin-top: 3px; }
+        .stat-info .sub  { font-size: 12px; color: #bbb; margin-top: 2px; }
+
+        /* ── Alert ── */
+        #cancelAlert {
+            background: linear-gradient(135deg,#d1fae5,#a7f3d0);
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.4s ease;
         }
-        .stat-info .val { font-size: 26px; font-weight: bold; color: #333; margin-top: 2px; }
-        .stat-info .sub { font-size: 12px; color: #aaa; margin-top: 2px; }
+        @keyframes slideIn { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+        #cancelAlert button { background: none; border: none; font-size: 20px; cursor: pointer; color: #065f46; }
 
         /* ── Panel ── */
         .panel {
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.07);
             overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.04);
         }
         .panel-head {
-            padding: 16px 24px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
+            padding: 18px 26px;
+            background: linear-gradient(135deg,#f8fffc,#f0faf5);
+            border-bottom: 1px solid #e8f5ee;
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
         }
-        .panel-head h4 { font-size: 16px; color: #333; }
+        .panel-head h4 { font-size: 16px; color: #0A2E1F; font-weight: 700; }
         #searchInput {
-            padding: 8px 14px;
-            border: 1.5px solid #ddd;
-            border-radius: 8px;
+            padding: 9px 16px;
+            border: 1.5px solid #d1fae5;
+            border-radius: 30px;
             font-size: 13px;
-            width: 220px;
+            width: 230px;
+            font-family: inherit;
+            background: white;
         }
-        #searchInput:focus { outline: none; border-color: #28a745; }
+        #searchInput:focus { outline: none; border-color: #1aa356; box-shadow: 0 0 0 3px rgba(26,163,86,0.12); }
 
         /* ── Booking Cards ── */
-        .booking-list { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
-
+        .booking-list { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
         .booking-card {
-            border: 1.5px solid #e5e5e5;
-            border-radius: 14px;
+            border: 1.5px solid #e5efe9;
+            border-radius: 16px;
             overflow: hidden;
-            transition: box-shadow 0.2s, transform 0.2s;
+            transition: box-shadow 0.25s, transform 0.25s;
+            background: white;
         }
-        .booking-card:hover {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.10);
-            transform: translateY(-1px);
-        }
+        .booking-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.10); transform: translateY(-2px); }
 
-        /* Card top bar */
+        /* Header bar with colored left accent */
         .bc-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 13px 20px;
-            background: linear-gradient(135deg, #f8fffe, #f0fbf4);
-            border-bottom: 1px solid #e8e8e8;
-            flex-wrap: wrap;
-            gap: 8px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 22px;
+            background: linear-gradient(135deg, #f8fffc, #f0faf5);
+            border-bottom: 1px solid #e8f0ec;
+            flex-wrap: wrap; gap: 10px;
+            border-left: 5px solid #1aa356;
         }
-        .bc-id-wrap { display: flex; align-items: center; gap: 10px; }
-        .bc-id {
-            font-weight: bold;
-            font-size: 15px;
-            color: #1a3a2a;
-        }
-        .bc-tent-name {
-            font-size: 14px;
-            color: #555;
-            font-weight: 600;
-        }
-        .bc-booked-on { font-size: 12px; color: #aaa; }
+        .bc-header.cancelled { border-left-color: #ef4444; background: linear-gradient(135deg,#fff5f5,#fef2f2); }
+        .bc-id-wrap  { display: flex; align-items: center; gap: 10px; }
+        .bc-id       { font-weight: 800; font-size: 15px; color: #0A2E1F; }
+        .bc-tent-name{ font-size: 14px; color: #555; font-weight: 600; }
+        .bc-booked-on{ font-size: 11px; color: #bbb; font-weight: 500; }
 
-        /* Badge */
+        /* Badges */
         .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 5px 13px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 5px 13px; border-radius: 30px; font-size: 11px; font-weight: 700;
         }
-        .b-paid      { background: #e6f9ee; color: #1a7a3c; }
-        .b-pending   { background: #fff8e1; color: #b45309; }
-        .b-confirmed { background: #e8f0fe; color: #1a56db; }
-        .b-cancelled { background: #fdecea; color: #c0392b; }
-        .b-completed { background: #f3eeff; color: #5b21b6; }
+        .b-paid      { background: #d1fae5; color: #065f46; }
+        .b-pending   { background: #fef3c7; color: #92400e; }
+        .b-confirmed { background: #dbeafe; color: #1e40af; }
+        .b-cancelled { background: #fee2e2; color: #991b1b; }
+        .b-completed { background: #ede9fe; color: #5b21b6; }
 
-        /* Card body grid */
-        .bc-body { padding: 16px 20px; }
+        /* Card Body */
+        .bc-body { padding: 18px 22px; }
         .bc-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 14px;
-            margin-bottom: 14px;
+            display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 16px;
         }
         .bc-item label {
-            font-size: 10px;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 3px;
+            font-size: 10px; color: #aaa; text-transform: uppercase;
+            letter-spacing: 0.7px; display: block; margin-bottom: 4px; font-weight: 600;
         }
-        .bc-item .val { font-size: 14px; font-weight: bold; color: #333; }
-        .bc-item .val.highlight { color: #1a7a3c; font-size: 16px; }
+        .bc-item .val { font-size: 14px; font-weight: 700; color: #222; }
+        .bc-item .val.highlight { color: #1aa356; font-size: 16px; }
+        .section-divider { width:100%; border:none; border-top: 1px dashed #e8eeeb; margin: 14px 0; }
+        .bc-grid-2 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
 
-        /* Divider between grid sections */
-        .section-divider {
-            width: 100%;
-            border: none;
-            border-top: 1px dashed #eee;
-            margin: 12px 0;
-        }
-
-        /* Second grid row */
-        .bc-grid-2 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-        }
-
-        /* Card footer */
+        /* Card Footer */
         .bc-footer {
-            padding: 12px 20px;
-            background: #fafafa;
-            border-top: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 8px;
+            padding: 14px 22px;
+            background: linear-gradient(135deg,#fafffe,#f5fdf8);
+            border-top: 1px solid #e8f0ec;
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
         }
-        .total-cost {
-            font-size: 20px;
-            font-weight: bold;
-            color: #28a745;
-        }
-        .total-cost span { font-size: 13px; color: #aaa; margin-right: 4px; }
+        .total-cost { font-size: 22px; font-weight: 800; color: #1aa356; }
+        .total-cost span { font-size: 13px; color: #aaa; margin-right: 4px; font-weight: 500; }
         .payment-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            background: #f0f0f0;
-            color: #555;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 14px; border-radius: 20px; font-size: 12px;
+            font-weight: 700; background: #f0f0f0; color: #555;
         }
+
+        /* Cancel Button */
+        .btn-cancel {
+            background: linear-gradient(135deg,#fee2e2,#fecaca);
+            color: #991b1b;
+            border: 1.5px solid #fca5a5;
+            padding: 7px 18px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .btn-cancel:hover { background: linear-gradient(135deg,#fecaca,#fca5a5); transform: scale(1.04); }
 
         /* Empty state */
-        .no-bookings {
-            text-align: center;
-            padding: 70px 20px;
-            color: #bbb;
-        }
-        .no-bookings .nb-icon { font-size: 64px; display: block; margin-bottom: 16px; }
-        .no-bookings h3 { font-size: 20px; color: #aaa; margin-bottom: 8px; }
+        .no-bookings { text-align: center; padding: 70px 20px; color: #bbb; }
+        .no-bookings .nb-icon { font-size: 68px; display: block; margin-bottom: 18px; }
+        .no-bookings h3 { font-size: 20px; color: #aaa; margin-bottom: 10px; }
         .no-bookings p  { font-size: 14px; }
         .no-bookings a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #1a3a2a, #28a745);
-            color: white;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: opacity 0.2s;
+            display: inline-block; margin-top: 22px; padding: 13px 32px;
+            background: linear-gradient(135deg,#0A2E1F,#1aa356);
+            color: white; border-radius: 30px; text-decoration: none;
+            font-weight: 700; transition: opacity 0.2s, transform 0.2s;
         }
-        .no-bookings a:hover { opacity: 0.88; }
+        .no-bookings a:hover { opacity: 0.9; transform: translateY(-2px); }
 
-        /* Footer logout link */
-        .logout-link {
-            text-align: center;
-            margin-top: 24px;
-            font-size: 14px;
-        }
-        .logout-link a {
-            color: #c0392b;
-            text-decoration: none;
-            font-weight: bold;
-        }
+        .logout-link { text-align: center; margin-top: 26px; font-size: 14px; }
+        .logout-link a { color: #ef4444; text-decoration: none; font-weight: 700; }
         .logout-link a:hover { text-decoration: underline; }
 
         @media (max-width: 700px) {
@@ -269,9 +238,9 @@
     </style>
 </head>
 <body>
+<%@ include file="Header.jsp" %>
 
 <%
-    // Session guard
     String loggedUser = (session != null) ? (String)session.getAttribute("username") : null;
     if (loggedUser == null) { response.sendRedirect("login"); return; }
 
@@ -287,18 +256,18 @@
 
 <div class="page">
 
-    <!-- Cancellation flash message -->
+    <%-- Cancellation flash message --%>
     <%
         String cancelMsg = (String) request.getAttribute("cancelMsg");
         if (cancelMsg != null && !cancelMsg.isEmpty()) {
     %>
-    <div id="cancelAlert" style="background:#e6f9ee;color:#1a7a3c;border:1px solid #b7eacb;border-radius:10px;padding:14px 20px;margin-bottom:18px;font-weight:bold;display:flex;align-items:center;justify-content:space-between;">
+    <div id="cancelAlert">
         <span><%= cancelMsg %></span>
-        <button onclick="document.getElementById('cancelAlert').style.display='none'" style="background:none;border:none;font-size:18px;cursor:pointer;color:#1a7a3c;">✕</button>
+        <button onclick="document.getElementById('cancelAlert').style.display='none'">✕</button>
     </div>
     <% } %>
 
-    <!-- Welcome Banner -->
+    <%-- Welcome Banner --%>
     <div class="welcome">
         <div>
             <h2>👋 Welcome, <%= fullName %>!</h2>
@@ -307,7 +276,7 @@
         <a href="book" class="btn-newbooking">📅 New Booking</a>
     </div>
 
-    <!-- Stat Cards -->
+    <%-- Stat Cards --%>
     <div class="stats-row">
         <div class="stat-card">
             <div class="si si-blue">📋</div>
@@ -330,12 +299,12 @@
             <div class="stat-info">
                 <label>Pending Payment</label>
                 <div class="val"><%= pendingCount %></div>
-                <div class="sub">Awaiting payment</div>
+                <div class="sub">Pay on arrival</div>
             </div>
         </div>
     </div>
 
-    <!-- Bookings Panel -->
+    <%-- Bookings Panel --%>
     <div class="panel">
         <div class="panel-head">
             <h4>🏕️ Your Booking History</h4>
@@ -355,11 +324,6 @@
 
         <div class="booking-list" id="bookingList">
         <%
-            /* bookings columns:
-               [0]=id  [1]=tent_name  [2]=arrival_date  [3]=departure_date
-               [4]=no_of_persons  [5]=no_of_kids  [6]=total_cost
-               [7]=payment_method  [8]=payment_status  [9]=status  [10]=created_at
-            */
             for (String[] b : bookings) {
                 String statusBadge = "b-confirmed";
                 String statusIcon  = "✅";
@@ -369,9 +333,10 @@
 
                 String payBadge = "b-pending";
                 String payIcon  = "⏳";
-                if ("PAID".equalsIgnoreCase(b[8]))      { payBadge = "b-paid"; payIcon = "✅"; }
+                if ("PAID".equalsIgnoreCase(b[8])) { payBadge = "b-paid"; payIcon = "✅"; }
 
-                // Compute nights
+                boolean isCancelled = "cancelled".equalsIgnoreCase(b[9]);
+
                 int nights = 1;
                 try {
                     java.time.LocalDate arr = java.time.LocalDate.parse(b[2]);
@@ -382,8 +347,7 @@
         %>
             <div class="booking-card" data-search="<%= (b[0]+b[1]+b[2]+b[3]+b[9]).toLowerCase() %>">
 
-                <!-- Card Header -->
-                <div class="bc-header">
+                <div class="bc-header <%= isCancelled ? "cancelled" : "" %>">
                     <div class="bc-id-wrap">
                         <span class="bc-id">📋 #<%= b[0] %></span>
                         <span class="bc-tent-name">⛺ <%= b[1] %></span>
@@ -394,10 +358,7 @@
                     </div>
                 </div>
 
-                <!-- Card Body -->
                 <div class="bc-body">
-
-                    <!-- Row 1: Date & Guests -->
                     <div class="bc-grid">
                         <div class="bc-item">
                             <label>📅 Check-In</label>
@@ -424,7 +385,6 @@
 
                     <hr class="section-divider">
 
-                    <!-- Row 2: Payment Details -->
                     <div class="bc-grid-2">
                         <div class="bc-item">
                             <label>💳 Payment Method</label>
@@ -437,31 +397,24 @@
                             </div>
                         </div>
                         <div class="bc-item">
-                            <label>⛺ Tent</label>
+                            <label>⛺ Accommodation</label>
                             <div class="val"><%= b[1] %></div>
                         </div>
                     </div>
-
                 </div>
 
-                <!-- Card Footer -->
                 <div class="bc-footer">
-                    <div>
-                        <div class="total-cost">
-                            <span>Total Cost</span>
-                            ₹<%= String.format("%,d", Integer.parseInt(b[6])) %>
-                        </div>
+                    <div class="total-cost">
+                        <span>Total Cost</span>₹<%= String.format("%,d", Integer.parseInt(b[6])) %>
                     </div>
-                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
                         <span class="payment-pill"><%= payIcon %> <%= b[8] %></span>
-                        <% if (!"cancelled".equalsIgnoreCase(b[9])) { %>
+                        <% if (!isCancelled) { %>
+                        <%-- FIX: action must match the servlet-mapping in web.xml (/MyBookings) --%>
                         <form method="post" action="MyBookings"
-                              onsubmit="return confirm('Cancel booking #<%= b[0] %>? This cannot be undone.');">
+                              onsubmit="return confirmCancel('<%= b[0] %>')">
                             <input type="hidden" name="bookingId" value="<%= b[0] %>">
-                            <button type="submit"
-                                    style="background:#fdecea;color:#c0392b;border:1.5px solid #fbc9c5;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:bold;cursor:pointer;transition:background 0.2s;"
-                                    onmouseover="this.style.background='#fbc9c5'"
-                                    onmouseout="this.style.background='#fdecea'">❌ Cancel Booking</button>
+                            <button type="submit" class="btn-cancel">❌ Cancel Booking</button>
                         </form>
                         <% } %>
                     </div>
@@ -474,21 +427,22 @@
         <% } %>
     </div>
 
-    <div class="logout-link">
-        <a href="logout">🚪 Logout</a>
-    </div>
+    <div class="logout-link"><a href="logout">🚪 Logout</a></div>
 </div>
 
 <script>
 function filterBookings() {
     var q = document.getElementById('searchInput').value.toLowerCase();
-    var cards = document.querySelectorAll('#bookingList .booking-card');
-    cards.forEach(function(card) {
-        var data = card.getAttribute('data-search') || '';
-        card.style.display = data.includes(q) ? '' : 'none';
+    document.querySelectorAll('#bookingList .booking-card').forEach(function(card) {
+        card.style.display = (card.getAttribute('data-search') || '').includes(q) ? '' : 'none';
     });
+}
+
+function confirmCancel(id) {
+    return confirm('Are you sure you want to cancel Booking #' + id + '?\nThis action cannot be undone.');
 }
 </script>
 
+<%@ include file="Footer.jsp" %>
 </body>
 </html>

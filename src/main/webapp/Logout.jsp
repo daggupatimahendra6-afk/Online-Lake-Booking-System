@@ -10,7 +10,7 @@
 
 <%
     session.invalidate(); // Destroy session
-    response.sendRedirect("Login.jsp"); // Redirect to login page
+    response.sendRedirect("login"); // Redirect to login page
 %>
 
 </body>

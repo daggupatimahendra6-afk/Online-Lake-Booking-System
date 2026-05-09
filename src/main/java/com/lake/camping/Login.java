@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
 
-@WebServlet("/Login")
+// URL mapped in web.xml — @WebServlet removed to avoid duplicate mapping conflict
 public class Login extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

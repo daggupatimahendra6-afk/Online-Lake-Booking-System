@@ -14,7 +14,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/DisplayContact")
+// URL mapped in web.xml u2014 @WebServlet removed to avoid duplicate mapping
 public class DisplayContact extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

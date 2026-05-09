@@ -28,13 +28,14 @@
             <a class="nav-link active" aria-current="page" href="./Dashboard">Home</a>
           </li>
           
-          
-         
           <li class="nav-item">
             <a class="nav-link" href="./DisplayBooking">Display Booking</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./DisplayContact"> Display Enquiries</a>
+            <a class="nav-link" href="./DisplayContact">Display Enquiries</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./AddAdmin">➕ Add New Admin</a>
           </li>
           
           <li class="nav-item">

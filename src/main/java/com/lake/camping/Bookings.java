@@ -12,12 +12,13 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-@WebServlet("/Bookings")
+// URL mapped in web.xml u2014 @WebServlet removed to avoid duplicate mapping
 public class Bookings extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -116,21 +117,40 @@ public class Bookings extends HttpServlet {
                 // STEP 1: Save user account if credentials provided
                 if (!formUsername.isEmpty() && !formPassword.isEmpty()) {
                     boolean userExists = false;
+                    int existingUserId = 0;
                     try (PreparedStatement chk = con.prepareStatement(
                             "SELECT user_id FROM users WHERE username = ?")) {
                         chk.setString(1, formUsername);
-                        userExists = chk.executeQuery().next();
+                        ResultSet chkRs = chk.executeQuery();
+                        if (chkRs.next()) {
+                            userExists     = true;
+                            existingUserId = chkRs.getInt("user_id");
+                        }
                     }
                     if (!userExists) {
+                        // FIX 1: include phone so account is created correctly
                         try (PreparedStatement ins = con.prepareStatement(
-                                "INSERT INTO users (username, password, email, full_name, role) " +
-                                "VALUES (?, crypt(?, gen_salt('bf')), ?, ?, 'user')")) {
+                                "INSERT INTO users (username, password, email, full_name, phone, role) " +
+                                "VALUES (?, crypt(?, gen_salt('bf')), ?, ?, ?, 'user') " +
+                                "RETURNING user_id")) {
                             ins.setString(1, formUsername);
                             ins.setString(2, formPassword);
                             ins.setString(3, email);
                             ins.setString(4, name);
-                            ins.executeUpdate();
+                            ins.setLong(5, Long.parseLong(digitsOnly));
+                            ResultSet insRs = ins.executeQuery();
+                            if (insRs.next()) {
+                                existingUserId = insRs.getInt("user_id");
+                            }
                         }
+                    }
+                    // FIX 2: auto-login with full session including userId (same as Login.java)
+                    if (existingUserId > 0) {
+                        HttpSession session = request.getSession(true);
+                        session.setAttribute("userId",   existingUserId);
+                        session.setAttribute("username", formUsername);
+                        session.setAttribute("fullName", name);
+                        session.setAttribute("role",     "user");
                     }
                 }
 
@@ -186,15 +206,7 @@ public class Bookings extends HttpServlet {
                 }
             }
 
-            // STEP 5: Auto-login after booking
-            if (!formUsername.isEmpty()) {
-                HttpSession session = request.getSession(true);
-                session.setAttribute("username", formUsername);
-                session.setAttribute("fullName", name);
-                session.setAttribute("role",     "user");
-            }
-
-            // STEP 6: Send confirmation email (Item 5)
+            // STEP 5: Send confirmation email
             try {
                 sendConfirmationEmail(email, name, bookingRef, tentName,
                                       arrivalStr, departureStr, totalCost, paymentStatus);
@@ -253,7 +265,7 @@ public class Bookings extends HttpServlet {
                                        String bookingRef, String tentName,
                                        String arrival, String departure,
                                        int totalCost, String paymentStatus)
-            throws MessagingException {
+            throws MessagingException, UnsupportedEncodingException {
 
         String smtpHost = getEnv("SMTP_HOST", "smtp.gmail.com");
         String smtpPort = getEnv("SMTP_PORT", "587");

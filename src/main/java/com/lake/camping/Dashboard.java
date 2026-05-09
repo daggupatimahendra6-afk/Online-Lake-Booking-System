@@ -17,7 +17,7 @@ import java.util.List;
  * Dashboard servlet — owns all DB queries for the admin dashboard.
  * The JSP (Dashboard.jsp) only renders request attributes; no Java in the view.
  */
-@WebServlet("/Dashboard")
+// URL mapped in web.xml u2014 @WebServlet removed to avoid duplicate mapping
 public class Dashboard extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

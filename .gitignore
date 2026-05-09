@@ -1,27 +1,39 @@
-# Eclipse Dynamic Web Project — Onlinecamp
-# https://git-scm.com/docs/gitignore
-
-# ── Compiled output ────────────────────────────────────────
-/build/
-**/*.class
-
-# ── Eclipse project files ─────────────────────────────────
+# Eclipse / IDE files
 .classpath
 .project
 .settings/
-
-# ── macOS artifacts ───────────────────────────────────────
-.DS_Store
-__MACOSX/
-
-# ── IDE & OS extras ───────────────────────────────────────
-*.swp
-*.swo
-Thumbs.db
-*.bak
-
-# ── Tomcat / server state ─────────────────────────────────
-Servers/
 .metadata/
+bin/
 
-# Track: src/ and src/main/webapp/ only (source files)
+# Build outputs
+build/
+target/
+*.war
+*.jar
+*.class
+
+# Tomcat working files
+work/
+logs/
+temp/
+
+# Environment / secrets — NEVER commit these
+.env
+*.env
+env.properties
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Java compiled
+*.class
+
+# Logs
+*.log

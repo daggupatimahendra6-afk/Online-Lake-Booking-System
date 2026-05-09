@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="Header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,237 +9,313 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #f9f9f9;
+            font-family: 'Outfit', sans-serif; /* Fallback will be handled by header's Outfit import */
+            background: #f8faf9; /* very light green-tinted off-white */
             color: #333;
         }
 
         /* ── Hero Section ── */
         .hero {
-            background: linear-gradient(135deg, rgba(10,40,20,0.82), rgba(0,80,60,0.75)),
+            background: linear-gradient(135deg, rgba(4, 28, 16, 0.85), rgba(0, 50, 36, 0.75)),
                         url('./images/vasota.jpg') center/cover no-repeat;
-            min-height: 520px;
+            min-height: 600px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
-            padding: 60px 20px 40px;
+            padding: 100px 20px 60px;
+            position: relative;
+        }
+        .hero-content {
+            animation: fadeInDrop 1s ease-out forwards;
+        }
+        @keyframes fadeInDrop {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .hero-content h1 {
-            font-size: 48px;
-            font-weight: bold;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-            margin-bottom: 14px;
+            font-size: 56px;
+            font-weight: 700;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            margin-bottom: 18px;
+            letter-spacing: -0.5px;
         }
         .hero-content p {
-            font-size: 18px;
-            opacity: 0.92;
-            max-width: 600px;
-            margin: 0 auto 28px;
+            font-size: 19px;
+            opacity: 0.9;
+            max-width: 650px;
+            margin: 0 auto 34px;
             line-height: 1.6;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
-        .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
         .btn-hero-primary {
-            padding: 14px 32px;
-            background: #28a745;
+            padding: 15px 36px;
+            background: linear-gradient(135deg, #1aa356, #128a42);
             color: white;
             border-radius: 30px;
             text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background 0.2s, transform 0.2s;
+            font-size: 17px;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(26, 163, 86, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .btn-hero-primary:hover { background: #1e7e34; transform: translateY(-2px); }
+        .btn-hero-primary:hover {
+            background: linear-gradient(135deg, #1cc164, #159f4d);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 163, 86, 0.5);
+            color: white;
+        }
         .btn-hero-outline {
-            padding: 14px 32px;
-            background: transparent;
+            padding: 15px 36px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
             color: white;
-            border: 2px solid white;
+            border: 1px solid rgba(255,255,255,0.4);
             border-radius: 30px;
             text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background 0.2s;
+            font-size: 17px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .btn-hero-outline:hover { background: rgba(255,255,255,0.15); }
-
-        /* ── Stats bar ── */
-        .stats-bar {
-            background: #1a3a2a;
+        .btn-hero-outline:hover { 
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-3px);
             color: white;
+        }
+
+        /* ── Overlay Stats bar (Glassmorphism) ── */
+        .stats-wrapper {
+            position: relative;
+            max-width: 1000px;
+            margin: -50px auto 40px;
+            padding: 0 20px;
+            z-index: 10;
+        }
+        .stats-bar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             display: flex;
             justify-content: center;
-            gap: 0;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.6);
         }
         .stat-item {
+            flex: 1;
             text-align: center;
-            padding: 20px 48px;
-            border-right: 1px solid rgba(255,255,255,0.15);
+            padding: 26px 20px;
+            border-right: 1px solid rgba(0,0,0,0.06);
+            transition: transform 0.3s;
         }
+        .stat-item:hover { transform: translateY(-3px); }
         .stat-item:last-child { border-right: none; }
-        .stat-item .num { font-size: 28px; font-weight: bold; color: #5dde8b; }
-        .stat-item .lbl { font-size: 13px; opacity: 0.75; margin-top: 2px; }
+        .stat-item .num { font-size: 32px; font-weight: 700; color: #1aa356; line-height: 1.1; }
+        .stat-item .lbl { font-size: 14px; font-weight: 500; color: #666; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
 
         /* ── Section header ── */
-        .section { padding: 60px 40px; }
-        .section-header { text-align: center; margin-bottom: 40px; }
+        .section { padding: 80px 20px; }
+        .section-header { text-align: center; margin-bottom: 50px; }
         .section-header h2 {
-            font-size: 32px;
-            color: #1a3a2a;
-            margin-bottom: 10px;
+            font-size: 36px;
+            font-weight: 700;
+            color: #0A2E1F;
+            margin-bottom: 12px;
         }
-        .section-header p { font-size: 16px; color: #777; max-width: 520px; margin: 0 auto; }
+        .section-header p { font-size: 17px; color: #666; max-width: 580px; margin: 0 auto; line-height: 1.6; }
         .section-header .underline {
-            width: 60px; height: 4px;
-            background: #28a745;
-            border-radius: 2px;
-            margin: 12px auto 0;
+            width: 70px; height: 5px;
+            background: linear-gradient(90deg, #1aa356, #0A2E1F);
+            border-radius: 3px;
+            margin: 16px auto 0;
         }
 
         /* ── About ── */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 60px;
             align-items: center;
-            max-width: 1100px;
+            max-width: 1150px;
             margin: 0 auto;
+        }
+        .about-img-wrap {
+            position: relative;
         }
         .about-grid img {
             width: 100%;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transition: transform 0.3s;
         }
+        .about-grid img:hover { transform: scale(1.02); }
         .about-text h3 {
-            font-size: 26px;
-            color: #1a3a2a;
-            margin-bottom: 14px;
+            font-size: 30px;
+            font-weight: 700;
+            color: #0A2E1F;
+            margin-bottom: 18px;
         }
         .about-text p {
-            font-size: 15px;
+            font-size: 16px;
             color: #555;
             line-height: 1.8;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
-        .about-highlights { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+        .about-highlights { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
         .highlight-tag {
-            background: #e6f9ee;
-            color: #1a7a3c;
-            padding: 6px 14px;
+            background: #e9f7ef;
+            color: #128a42;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid rgba(18, 138, 66, 0.1);
+            transition: transform 0.2s, background 0.2s;
         }
+        .highlight-tag:hover { background: #d4f0df; transform: translateY(-2px); }
 
         /* ── Tents Grid ── */
-        .tents-section { background: #f0f7f3; }
+        .tents-section { background: #E8F2ED; }
         .tents-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
-            max-width: 1100px;
+            gap: 30px;
+            max-width: 1150px;
             margin: 0 auto;
         }
         .tent-card {
             background: white;
-            border-radius: 14px;
-            box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
             overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid rgba(0,0,0,0.03);
         }
-        .tent-card:hover { transform: translateY(-5px); box-shadow: 0 10px 28px rgba(0,0,0,0.13); }
+        .tent-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
         .tent-card-header {
-            background: linear-gradient(135deg, #1a3a2a, #28a745);
+            background: linear-gradient(135deg, #0A2E1F, #128a42);
             color: white;
-            padding: 22px 18px;
+            padding: 30px 20px;
             text-align: center;
-            font-size: 32px;
+            font-size: 40px;
+            position: relative;
         }
-        .tent-card-body { padding: 18px; }
-        .tent-card-body h4 { font-size: 16px; color: #222; margin-bottom: 6px; }
-        .tent-card-body p  { font-size: 13px; color: #777; line-height: 1.6; margin-bottom: 12px; }
+        /* Curve effect at bottom of header */
+        .tent-card-header::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 16px;
+            background: white; border-radius: 16px 16px 0 0;
+        }
+        .tent-card-body { padding: 10px 24px 28px; text-align: center; }
+        .tent-card-body h4 { font-size: 19px; font-weight: 700; color: #111; margin-bottom: 8px; }
+        .tent-card-body p  { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 16px; min-height: 44px; }
         .tent-price {
-            font-size: 20px;
-            font-weight: bold;
-            color: #28a745;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1aa356;
+            margin-bottom: 8px;
         }
-        .tent-price span { font-size: 13px; color: #aaa; font-weight: normal; }
-        .tent-capacity { font-size: 12px; color: #999; margin-top: 4px; }
+        .tent-price span { font-size: 14px; color: #999; font-weight: 500; }
+        .tent-capacity {
+            font-size: 13px; color: #777; font-weight: 500;
+            background: #f8f9fa; display: inline-block; padding: 4px 12px; border-radius: 12px;
+        }
 
         /* ── Features ── */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 22px;
-            max-width: 1100px;
+            gap: 26px;
+            max-width: 1150px;
             margin: 0 auto;
         }
         .feature-card {
             background: white;
-            border-radius: 14px;
-            padding: 28px 20px;
+            border-radius: 20px;
+            padding: 34px 24px;
             text-align: center;
-            box-shadow: 0 3px 14px rgba(0,0,0,0.07);
-            transition: transform 0.2s;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
         }
-        .feature-card:hover { transform: translateY(-4px); }
-        .feature-icon { font-size: 40px; margin-bottom: 14px; }
-        .feature-card h4 { font-size: 15px; color: #1a3a2a; margin-bottom: 8px; }
-        .feature-card p  { font-size: 13px; color: #777; line-height: 1.6; }
+        .feature-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #1aa356, #0A2E1F);
+            transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+        }
+        .feature-card:hover::before { transform: scaleX(1); }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 12px 35px rgba(0,0,0,0.08); }
+        .feature-icon { font-size: 46px; margin-bottom: 18px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+        .feature-card h4 { font-size: 18px; font-weight: 700; color: #0A2E1F; margin-bottom: 10px; }
+        .feature-card p  { font-size: 14px; color: #666; line-height: 1.6; }
+
+        /* ── Schedule ── */
+        .schedule-wrap {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            max-width: 950px;
+            margin: 0 auto;
+        }
+        .schedule-img {
+            text-align: center;
+        }
+        .schedule-img img {
+            width: 100%;
+            border-radius: 12px;
+        }
 
         /* ── CTA ── */
         .cta-section {
-            background: linear-gradient(135deg, #1a3a2a, #28a745);
+            background: linear-gradient(135deg, rgba(10, 46, 31, 0.95), rgba(18, 138, 66, 0.85)), url('./images/vasota.jpg') center/cover;
+            background-blend-mode: overlay;
             color: white;
             text-align: center;
-            padding: 60px 30px;
+            padding: 80px 30px;
         }
-        .cta-section h2 { font-size: 32px; margin-bottom: 12px; }
-        .cta-section p  { font-size: 16px; opacity: 0.88; margin-bottom: 28px; }
+        .cta-section h2 { font-size: 40px; font-weight: 700; margin-bottom: 18px; }
+        .cta-section p  { font-size: 18px; opacity: 0.9; margin-bottom: 34px; max-width: 600px; margin-left: auto; margin-right: auto;}
         .btn-cta {
             display: inline-block;
-            padding: 15px 40px;
+            padding: 16px 44px;
             background: white;
-            color: #1a3a2a;
+            color: #0A2E1F;
             border-radius: 30px;
             text-decoration: none;
-            font-size: 17px;
-            font-weight: bold;
-            transition: transform 0.2s;
+            font-size: 18px;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
-        .btn-cta:hover { transform: scale(1.04); }
+        .btn-cta:hover { transform: scale(1.05); box-shadow: 0 12px 35px rgba(0,0,0,0.3); color: #1aa356; }
 
-        /* ── Schedule ── */
-        .schedule-img {
-            text-align: center;
-            padding: 20px 40px 60px;
-        }
-        .schedule-img img {
-            max-width: 900px;
-            width: 100%;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-            border: 3px solid #28a745;
-        }
-
-        @media (max-width: 900px) {
-            .hero-content h1 { font-size: 32px; }
-            .about-grid      { grid-template-columns: 1fr; }
+        @media (max-width: 991px) {
+            .hero-content h1 { font-size: 42px; }
+            .about-grid      { grid-template-columns: 1fr; gap: 40px; }
             .tents-grid      { grid-template-columns: 1fr 1fr; }
             .features-grid   { grid-template-columns: 1fr 1fr; }
             .stats-bar       { flex-wrap: wrap; }
-            .stat-item       { padding: 16px 28px; }
+            .stat-item       { padding: 20px; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.06); min-width: 50%; }
         }
         @media (max-width: 600px) {
+            .hero-content h1 { font-size: 36px; }
+            .hero-btns { flex-direction: column; }
+            .btn-hero-primary, .btn-hero-outline { width: 100%; }
             .tents-grid    { grid-template-columns: 1fr; }
-            .features-grid { grid-template-columns: 1fr 1fr; }
-            .section       { padding: 40px 20px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .stat-item { min-width: 100%; }
+            .section       { padding: 60px 20px; }
         }
     </style>
 </head>
 <body>
-
+<%@ include file="Header.jsp" %>
 <!-- ── Hero ── -->
 <div class="hero">
     <div class="hero-content">
@@ -254,22 +329,24 @@
 </div>
 
 <!-- ── Stats bar ── -->
-<div class="stats-bar">
-    <div class="stat-item">
-        <div class="num">500+</div>
-        <div class="lbl">Happy Campers</div>
-    </div>
-    <div class="stat-item">
-        <div class="num">6</div>
-        <div class="lbl">Tent Options</div>
-    </div>
-    <div class="stat-item">
-        <div class="num">4.9★</div>
-        <div class="lbl">Guest Rating</div>
-    </div>
-    <div class="stat-item">
-        <div class="num">3 Yrs</div>
-        <div class="lbl">In Business</div>
+<div class="stats-wrapper">
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="num">500+</div>
+            <div class="lbl">Happy Campers</div>
+        </div>
+        <div class="stat-item">
+            <div class="num">6</div>
+            <div class="lbl">Tent Options</div>
+        </div>
+        <div class="stat-item">
+            <div class="num">4.9★</div>
+            <div class="lbl">Guest Rating</div>
+        </div>
+        <div class="stat-item">
+            <div class="num">3 Yrs</div>
+            <div class="lbl">In Business</div>
+        </div>
     </div>
 </div>
 
@@ -392,15 +469,17 @@
 </div>
 
 <!-- ── Schedule ── -->
-<div class="section" style="padding-top:0; padding-bottom:20px;">
+<div class="section" style="padding-top:0; padding-bottom:60px;">
     <div class="section-header">
         <h2>📅 Camp Schedule</h2>
         <p>A day-by-day breakdown of your camping adventure.</p>
         <div class="underline"></div>
     </div>
-</div>
-<div class="schedule-img">
-    <img src="./images/schedule.jpg" alt="Camp Schedule">
+    <div class="schedule-wrap">
+        <div class="schedule-img">
+            <img src="./images/schedule.jpg" alt="Camp Schedule">
+        </div>
+    </div>
 </div>
 
 <!-- ── CTA ── -->

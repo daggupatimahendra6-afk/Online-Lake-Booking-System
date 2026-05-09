@@ -1,51 +1,44 @@
 package com.lake.util;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-
 import java.sql.Connection;
+import java.sql.DriverManager;
 
 /**
- * Centralised DB connection utility using HikariCP connection pool.
- * Credentials are read from environment variables so that no secrets
- * are hardcoded in source:
+ * Simple JDBC connection utility.
+ * Uses DriverManager directly (no HikariCP dependency) so it compiles
+ * cleanly in any Eclipse/Tomcat setup without extra build-path config.
  *
- *   DB_URL  – e.g. jdbc:postgresql://localhost/onlinecamp
- *   DB_USER – e.g. postgres
- *   DB_PWD  – your PostgreSQL password
- *
- * Set these in Tomcat's setenv.sh (or your IDE run-config) before starting.
+ * DB credentials are read from environment variables with fallbacks:
+ * DB_URL – e.g. jdbc:postgresql://localhost/onlinecamp
+ * DB_USER – postgres
+ * DB_PWD – root
  */
 public class DBConnection {
 
-    private static final HikariDataSource dataSource;
+    private static final String URL;
+    private static final String USER;
+    private static final String PWD;
 
     static {
-        // Env-var lookups with localhost dev fallbacks
-        String url  = getEnv("DB_URL",  "jdbc:postgresql://localhost/onlinecamp");
-        String user = getEnv("DB_USER", "postgres");
-        String pwd  = getEnv("DB_PWD",  "root");
+        URL = getEnv("DB_URL", "jdbc:postgresql://ep-fragrant-sound-aq8ch43r-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require");
+        USER = getEnv("DB_USER", "neondb_owner");
+        PWD = getEnv("DB_PWD", "npg_eo2Ckivh0jaL");
 
-        HikariConfig cfg = new HikariConfig();
-        cfg.setJdbcUrl(url);
-        cfg.setUsername(user);
-        cfg.setPassword(pwd);
-        cfg.setDriverClassName("org.postgresql.Driver");
-
-        // Pool tuning
-        cfg.setMinimumIdle(2);
-        cfg.setMaximumPoolSize(10);
-        cfg.setConnectionTimeout(30_000);   // 30 s
-        cfg.setIdleTimeout(600_000);        // 10 min
-        cfg.setMaxLifetime(1_800_000);      // 30 min
-        cfg.setPoolName("OnlinecampPool");
-
-        dataSource = new HikariDataSource(cfg);
+        // Load the PostgreSQL JDBC driver (required for older Tomcat versions)
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new ExceptionInInitializerError(
+                    "PostgreSQL JDBC driver not found in WEB-INF/lib: " + e.getMessage());
+        }
     }
 
-    /** Returns a pooled Connection. Callers must close() it (try-with-resources). */
+    /**
+     * Returns a new JDBC Connection.
+     * Callers MUST close it (try-with-resources pattern).
+     */
     public static Connection getConnection() throws Exception {
-        return dataSource.getConnection();
+        return DriverManager.getConnection(URL, USER, PWD);
     }
 
     private static String getEnv(String key, String defaultValue) {

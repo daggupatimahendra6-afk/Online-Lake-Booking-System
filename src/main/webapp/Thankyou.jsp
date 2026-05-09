@@ -17,7 +17,7 @@
         .card {
             background: white; border-radius: 16px;
             box-shadow: 0 6px 28px rgba(0,0,0,0.12);
-            max-width: 620px; width: 100%; overflow: hidden;
+            max-width: 780px; width: 100%; overflow: hidden;
         }
         .card-header {
             text-align: center; padding: 30px 20px; color: white;
@@ -74,23 +74,33 @@
         }
 
         /* QR for offline payment */
-        .payment-section { padding: 0 28px 20px; }
+        .payment-section { padding: 0 28px 24px; }
         .payment-section h3 {
-            font-size: 14px; color: #333; margin-bottom: 12px;
-            border-left: 4px solid #f39c12; padding-left: 10px;
+            font-size: 16px; color: #333; margin-bottom: 16px;
+            border-left: 5px solid #f39c12; padding-left: 12px;
             text-transform: uppercase; letter-spacing: 0.5px;
+            font-weight: 700;
         }
         .payment-inner {
-            display: flex; align-items: center; gap: 16px;
-            background: #fff8f0; border: 1px solid #ffe0b2;
-            border-radius: 10px; padding: 14px;
+            display: flex; align-items: center; gap: 28px;
+            background: #fff8f0; border: 2px solid #ffe0b2;
+            border-radius: 14px; padding: 24px;
         }
         .qr-code {
-            width: 110px; height: 110px; border-radius: 8px;
-            border: 3px solid #f39c12; flex-shrink: 0;
+            width: 200px; height: 200px; border-radius: 12px;
+            border: 4px solid #f39c12; flex-shrink: 0;
+            object-fit: cover;
         }
-        .payment-text { font-size: 13px; color: #555; line-height: 1.7; }
-        .payment-text strong { color: #e65100; }
+        .payment-text { font-size: 16px; color: #555; line-height: 1.9; }
+        .payment-text strong { color: #e65100; font-size: 18px; }
+        .payment-text .pay-num {
+            font-size: 22px; font-weight: 700; color: #e65100;
+            display: block; margin-top: 6px;
+        }
+        .payment-text .pay-email {
+            font-size: 15px; color: #555;
+            display: block; margin-top: 4px;
+        }
 
         .online-success {
             background: #e6f9ee; border: 1px solid #b8f0d0;
@@ -189,12 +199,12 @@
     <div class="payment-section">
         <h3>Complete Payment at Camp</h3>
         <div class="payment-inner">
-            <img src="./images/qr.jpeg" alt="UPI QR" class="qr-code">
+            <img src="./images/paytm_qr.jpeg" alt="Paytm UPI QR" class="qr-code">
             <div class="payment-text">
                 Pay <strong>₹<%= String.format("%,d",totalCost) %></strong> via UPI on arrival.<br><br>
                 Or send payment screenshot to:<br>
-                <strong>📱 7666692287</strong><br>
-                <strong>📧 vasotalakecamping@gmail.com</strong>
+                <span class="pay-num">📱 9579350747</span>
+                <span class="pay-email">📧 vasotalakecamping@gmail.com</span>
             </div>
         </div>
     </div>

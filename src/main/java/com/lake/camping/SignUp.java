@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
 
-@WebServlet("/SignUp")
+// URL mapped in web.xml u2014 @WebServlet removed to avoid duplicate mapping
 public class SignUp extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -80,6 +80,6 @@ public class SignUp extends HttpServlet {
         session.setAttribute("username", username);
         session.setAttribute("fullName", fullName);
         session.setAttribute("role",     "user");
-        response.sendRedirect("MyBookings.jsp");
+        response.sendRedirect("MyBookings");
     }
 }

@@ -5,7 +5,7 @@
     /* ── Admin session guard ─────────────────────────────────────────────── */
     String _role = (session != null) ? (String) session.getAttribute("role") : null;
     if (!"admin".equals(_role)) {
-        response.sendRedirect(request.getContextPath() + "/Login.jsp");
+        response.sendRedirect(request.getContextPath() + "/login");
         return;
     }
 %>

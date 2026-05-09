@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="Header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,24 +9,58 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f0f4f8;
-            padding-bottom: 60px;
+            font-family: 'Segoe UI', Inter, Arial, sans-serif;
+            background: linear-gradient(160deg, #f0f7f3 0%, #e8f5e9 40%, #f5f9ff 100%);
+            padding-bottom: 0;
         }
 
         /* ── Page Header ── */
         .gallery-hero {
+            background: linear-gradient(135deg, #0d2a4e 0%, #1a3a2a 50%, #28a745 100%);
             text-align: center;
-            padding: 48px 20px 32px;
+            padding: 72px 20px 56px;
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .gallery-hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 7px 18px;
+            border-radius: 30px;
+            margin-bottom: 18px;
+            position: relative;
         }
         .gallery-hero h2 {
-            font-size: 32px;
-            color: #1a3a2a;
-            margin-bottom: 8px;
+            font-size: clamp(26px, 5vw, 44px);
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            position: relative;
         }
         .gallery-hero p {
-            color: #666;
+            color: rgba(255,255,255,0.82);
             font-size: 15px;
+            position: relative;
+        }
+        .hero-wave {
+            position: absolute;
+            bottom: -1px;
+            left: 0; right: 0;
+            height: 60px;
         }
 
         /* ── Filter Tabs ── */
@@ -182,11 +215,16 @@
     </style>
 </head>
 <body>
+<%@ include file="Header.jsp" %>
 
     <!-- Page Header -->
     <div class="gallery-hero">
-        <h2>🌿 Photo Gallery</h2>
-        <p>Explore the beauty of Vasota Lake Camping through our lens</p>
+        <div class="gallery-hero-badge">🖼️ Photo Gallery</div>
+        <h2>🌿 Explore the Beauty</h2>
+        <p>Discover Vasota Lake Camping through our lens</p>
+        <svg class="hero-wave" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C300,60 900,0 1200,30 L1200,60 L0,60 Z" fill="#f0f7f3"/>
+        </svg>
     </div>
 
     <!-- Filter Tabs -->
@@ -324,6 +362,13 @@
     lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLightbox(); });
     document.addEventListener("keydown", e => { if (e.key === "Escape") closeLightbox(); });
     </script>
+
+    <!-- CTA Section -->
+    <div style="background: linear-gradient(135deg, #1a3a2a, #28a745); text-align:center; padding: 56px 20px; margin-top: 60px;">
+        <h2 style="color:#fff; font-size:28px; font-weight:800; margin-bottom:10px;">🏕️ Ready to Create Your Own Memories?</h2>
+        <p style="color:rgba(255,255,255,0.8); font-size:15px; margin-bottom:24px;">Book your camping experience and capture moments like these!</p>
+        <a href="book" style="display:inline-block; padding:14px 42px; background:#fff; color:#1a3a2a; border-radius:40px; font-size:16px; font-weight:800; text-decoration:none; box-shadow:0 6px 20px rgba(0,0,0,0.2); transition:all 0.25s;">📅 Book Your Spot</a>
+    </div>
 
     <%@ include file="Footer.jsp" %>
 

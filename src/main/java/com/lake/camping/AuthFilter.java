@@ -17,8 +17,9 @@ import java.io.IOException;
  * AuthFilter — intercepts all admin URLs and enforces admin-only access.
  * Any request to /Display* or /Dashboard* that does not carry an active
  * session with role="admin" is redirected to Login.jsp.
+ * URL patterns are now configured in web.xml (annotation scanning unreliable in Eclipse WTP).
  */
-@WebFilter(urlPatterns = {"/Display*", "/Dashboard*"})
+// Filter mapped in web.xml — @WebFilter removed to avoid duplicate mapping conflict
 public class AuthFilter implements Filter {
 
     @Override

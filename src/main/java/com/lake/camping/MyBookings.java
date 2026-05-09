@@ -14,7 +14,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/MyBookings")
+// URL mapped in web.xml u2014 @WebServlet removed to avoid duplicate mapping
 public class MyBookings extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
